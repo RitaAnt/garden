@@ -5,7 +5,7 @@ class Tree
     public function __clone()
     {
 
-     }
+    }
 }
 class AppleTree
 {
