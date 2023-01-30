@@ -8,8 +8,6 @@ abstract class Tree
     protected $min;
     protected $max;
 
-    abstract protected function setAmount();
-
     function __construct(){
         $this->id = ++self::$id;
     }
@@ -20,7 +18,7 @@ abstract class Tree
         return $amount;
     }
     function setAmount(){
-        $amount = rand($min, $max)
+        $amount = rand($min, $max);
     }
 }
 abstract class Fruit{
@@ -31,19 +29,16 @@ abstract class Fruit{
     protected $max;
 
     function setWeight(){
-        $weight = rand($min, $max)
+        $weight = rand($min, $max);
     }
 }
 class AppleTree extends Tree
 {
-    $min = 40;
-    $max = 50;
     
 }
 class PearTree extends Tree
 {
-    $min = 0;
-    $max = 20;
+
 }
 
 $AppleTree1 = new AppleTree();
