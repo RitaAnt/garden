@@ -1,86 +1,58 @@
 <?php
+include __DIR__."\Prototype\include.php";
 
-abstract class Tree
-{
-    protected static $id = 0;
-    protected $nameFruit;
-    protected $amount;
-    protected $min;
-    protected $max;
 
-    function __construct(){
-        $this->id = ++self::$id;
-    }
-    function getId(){
-        return $this->id;
-    }
-    function getAmount(){
-        return $this->amount;
-    }
-    function setAmount(){
-        $this->amount = rand($min, $max);
-    }
+
+
+                                        //  Яблоня
+$resultApple = 0;
+$weightApple = 0;
+
+                                        //Создание первой, оригинальной яблони и вывод информации о ней.
+$AppleTree_original = new AppleTree(); 
+echo 'Номер яблони: '.$AppleTree_original->getId().'. Количество яблок на ней: '.$AppleTree_original->getAmount().'<BR>';
+
+$resultApple+=$AppleTree_original->getAmount();
+
+                                        //посчитать вес яблок у этой яблони
+$apples = $AppleTree_original->harvest();
+
+
+                                        //Создание клонов яблонь и вывод информации о них.
+for($i = 1; $i < 10; $i++){ 
+    $AppleTree_clon = clone $AppleTree_original;
+    echo 'Номер яблони: '.$AppleTree_clon->getId().'. Количество яблок на ней: '.$AppleTree_clon->getAmount().'<BR>';
+    $resultApple+=$AppleTree_original->getAmount();
+    array_merge($apples, $AppleTree_clon->harvest());
 }
-class AppleTree extends Tree
-{
-    function harvest(){
-        $apple1 = new Apple();
-        $fruits[] = $apple1;
-        for($i = 0; $i <= $amount; $i++){
-            $apple2 = clone $apple1;
-            $fruits[] = $apple2;
-        }
-        return $fruits;
-    }
+                                        //посчитать вес яблок у каждой яблонь из цикла
+
+foreach($apples as $apple){
+    $weightApple += $apple->getWeight();
 }
-class PearTree extends Tree
-{
-    function harvest(){
-        if($amount>0){
-            $pear1 = new Pear();
-            $fruits[] = $pear1;
-            for($i = 0; $i <= $amount; $i++){
-                $pear2 = clone $pear2;
-                $fruits[] = $pear2;
-            }
-            return $fruits;
-        }
-        else return 0;
+echo "Вес всех яблок: $weightApple <br><br>";
 
-    }
+                                        //  Груша
+$resultPear = 0;
+$weightPear = 0;
+
+                                        //Создание первой, оригинальной груши и вывод информации о ней.
+$PearTree_original = new AppleTree(); 
+echo 'Номер груши: '.$PearTree_original->getId().'. Количество груш на ней: '.$PearTree_original->getAmount().'<BR>';
+$resultPear+=$PearTree_original->getAmount();
+
+                                        //посчитать вес груш у этой груши
+$pears = $PearTree_original->harvest();
+                                        //Создание клонов груши и вывод информации о них.
+for($i = 1; $i < 15; $i++){ 
+    $PearTree_clon = clone $PearTree_original;
+    echo 'Номер груши: '.$PearTree_clon->getId().'. Количество груш на ней: '.$PearTree_clon->getAmount().'<BR>';
+    $resultPear+=$PearTree_original->getAmount();
+    array_merge($pears, $PearTree_clon->harvest());
 }
-
-
-
-abstract class Fruit{
-
-    protected $nameFruit;
-    protected $weight;
-    protected $min;
-    protected $max;
-
-    function __clone(){
-        setWeight();
-    }
-    function __construct(){
-        setWeight();
-    }
-    function setWeight(){
-        $this->weight = rand($min, $max);
-    }
+                                        //посчитать вес груш у каждой груши из цикла
+foreach($pears as $pear){
+    $weightPear += $pear->getWeight();
 }
+echo "Вес всех груш: $weightPear <br><br>";
 
-class Apple extends Fruit
-{
-    
-}
-class Pear extends Fruit
-{
-
-}
-
-$AppleTree1 = new AppleTree();
-echo 'Apple tree 1 id: '.$AppleTree1->getId();
-
-
-?>
